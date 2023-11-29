@@ -2,9 +2,7 @@ const cardTemplate = document.querySelector('#card-template').content;
 const cardContainer = document.querySelector('.places__list');
 
 initialCards.forEach((item) => {
-  const cardElement = createCard(item.name, item.link, function (event) {
-    event.target.closest('.card').remove();
-  });
+  const cardElement = createCard(item.name, item.link, deleteCard);
   addCard(cardElement);
 });
 
@@ -23,4 +21,8 @@ function createCard(name, link, del) {
 
 function addCard(card){
   cardContainer.append(card);
+}
+
+function deleteCard(event) {
+  event.target.closest('.card').remove();
 }
