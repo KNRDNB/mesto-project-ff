@@ -1,2 +1,1 @@
-# Проектная работа Mesto
-https://github.com/KNRDNB/mesto-project-ff.git
+https://github.com/KNRDNB/.git
