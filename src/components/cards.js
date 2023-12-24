@@ -35,7 +35,7 @@ function createCard(name, link, del, like) {
   cardElement.querySelector('.card__title').textContent = name;
   cardImg.setAttribute('src', link);
   cardImg.setAttribute('alt', 'Картинка карточки: ' + name);
-  cardLikeBtn.addEventListener('click', like)
+  cardLikeBtn.addEventListener('click', like);
   cardDeleteBtn.addEventListener('click', del);
 
   return cardElement;
@@ -49,4 +49,4 @@ function likeCard(event) {
   event.target.classList.toggle('card__like-button_is-active');
 }
 
-export {initialCards, createCard, deleteCard, likeCard}
+export { initialCards, createCard, deleteCard, likeCard };
