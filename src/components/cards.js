@@ -24,10 +24,9 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
   },
 ];
-const cardTemplate = document.querySelector('#card-template').content;
-const cardContainer = document.querySelector('.places__list');
 
-function createCard(name, link, del, popup, like) {
+function createCard(name, link, del, like) {
+  const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImg = cardElement.querySelector('.card__image');
   const cardDeleteBtn = cardElement.querySelector('.card__delete-button');
@@ -35,16 +34,11 @@ function createCard(name, link, del, popup, like) {
 
   cardElement.querySelector('.card__title').textContent = name;
   cardImg.setAttribute('src', link);
-  cardImg.setAttribute('alt', 'Картинка карточки');
+  cardImg.setAttribute('alt', 'Картинка карточки: ' + name);
   cardLikeBtn.addEventListener('click', like)
   cardDeleteBtn.addEventListener('click', del);
-  cardImg.addEventListener('click', popup);
 
   return cardElement;
-}
-
-function addCard(card) {
-  cardContainer.insertBefore(card, cardContainer.firstChild);
 }
 
 function deleteCard(event) {
@@ -55,4 +49,4 @@ function likeCard(event) {
   event.target.classList.toggle('card__like-button_is-active');
 }
 
-export {initialCards,createCard,addCard,deleteCard,likeCard}
+export {initialCards, createCard, deleteCard, likeCard}
