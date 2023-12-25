@@ -25,7 +25,7 @@ const initialCards = [
   },
 ];
 
-function createCard(name, link, del, like) {
+function createCard(name, link, del, like, preparePopup) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImg = cardElement.querySelector('.card__image');
@@ -37,6 +37,7 @@ function createCard(name, link, del, like) {
   cardImg.setAttribute('alt', 'Картинка карточки: ' + name);
   cardLikeBtn.addEventListener('click', like);
   cardDeleteBtn.addEventListener('click', del);
+  cardImg.addEventListener('click', () => preparePopup(name, link));
 
   return cardElement;
 }

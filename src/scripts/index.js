@@ -37,15 +37,20 @@ const placeInput = popupNew.querySelector('.popup__input_type_card-name');
 const linkInput = popupNew.querySelector('.popup__input_type_url');
 
 initialCards.reverse().forEach((item) => {
-  const cardElement = createCard(item.name, item.link, deleteCard, likeCard);
-  cardElement
-    .querySelector('.card__image')
-    .addEventListener('click', () => prepareImgPopup(item.name, item.link));
+  const cardElement = createCard(item.name, item.link, deleteCard, likeCard, prepareImgPopup);
   addCard(cardElement);
 });
 
 profileEditBtn.addEventListener('click', prepareEditPopup);
 profileNewBtn.addEventListener('click', prepareNewPopup);
+popupEditCloseBtn.addEventListener('click', () => closeModal(popupEdit));
+popupNewCloseBtn.addEventListener('click', () => closeModal(popupNew));
+popupImgCloseBtn.addEventListener('click', () => closeModal(popupImg));
+popupEdit.addEventListener('click', closeModalOverlay);
+popupNew.addEventListener('click', closeModalOverlay);
+popupImg.addEventListener('click', closeModalOverlay);
+popupEdit.addEventListener('submit', handleFormEditSubmit);
+popupNew.addEventListener('submit', handleFormNewSubmit);
 
 function addCard(card) {
   cardContainer.insertBefore(card, cardContainer.firstChild);
@@ -55,14 +60,10 @@ function prepareEditPopup() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
   openModal(popupEdit);
-  addPopupListener(popupEdit, popupEditCloseBtn);
-  popupEdit.addEventListener('submit', handleFormEditSubmit);
 }
 
 function prepareNewPopup() {
   openModal(popupNew);
-  addPopupListener(popupNew, popupNewCloseBtn);
-  popupNew.addEventListener('submit', handleFormNewSubmit);
 }
 
 function prepareImgPopup(name, link) {
@@ -70,17 +71,10 @@ function prepareImgPopup(name, link) {
   popupPhoto.alt = 'Картинка карточки: ' + name;
   popupText.textContent = name;
   openModal(popupImg);
-  addPopupListener(popupImg, popupImgCloseBtn);
 }
 
 function resetForm(form) {
   form.reset();
-}
-
-function addPopupListener(popup, closeBtn) {
-  closeBtn.addEventListener('click', () => closeModal(popup));
-  popup.addEventListener('click', closeModalOverlay);
-  document.addEventListener('keydown', closeModalKey);
 }
 
 function handleFormEditSubmit(event) {
@@ -90,21 +84,18 @@ function handleFormEditSubmit(event) {
   closeModal(popupEdit);
   resetForm(popupEditForm);
 }
+
 function handleFormNewSubmit(event) {
   event.preventDefault();
-  let place = placeInput.value;
-  let link = linkInput.value;
 
   const cardElement = createCard(
     placeInput.value,
     linkInput.value,
     deleteCard,
-    likeCard
+    likeCard,
+    prepareImgPopup
   );
 
-  cardElement
-    .querySelector('.card__image')
-    .addEventListener('click', () => prepareImgPopup(place, link));
   addCard(cardElement);
   closeModal(popupNew);
   resetForm(popupNewForm);
