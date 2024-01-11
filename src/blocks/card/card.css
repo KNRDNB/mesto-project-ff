@@ -2,9 +2,13 @@
 
 @import url(./__image/card__image.css);
 
-@import url(./__like-button/card__like-button.css);
+@import url(./__like-section/card__like-section.css);
 
-@import url(./__like-button/_is-active/card__like-button_is-active.css);
+@import url(./__like-section/_like-button/card__like-section_like-button.css);
+
+@import url(./__like-section/_like-button/_is-active/card__like-section_like-button_is-active.css);
+
+@import url(./__like-section/_likes-counter/card__like-section_likes-counter.css);
 
 @import url(./__delete-button/card__delete-button.css);
 

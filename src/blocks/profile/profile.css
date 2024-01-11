@@ -8,7 +8,13 @@
 
 @import url(./__title/profile__title.css);
 
-@import url(./__image/profile__image.css);
+@import url(.//__avatar/profile__avatar.css);
+
+@import url(.//__avatar/_image/profile__avatar_image.css);
+
+@import url(.//__avatar/_overlay/profile__avatar_overlay.css);
+
+@import url(.//__avatar/_overlay-edit/profile__avatar_overlay-edit.css);
 
 .profile {
   font-family: Inter, Arial, sans-serif;

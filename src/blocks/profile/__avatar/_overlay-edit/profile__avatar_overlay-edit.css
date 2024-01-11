@@ -1,0 +1,8 @@
+ .profile__avatar_overlay-edit{
+  position: absolute;
+  top: calc(50%-13px);
+  left: calc(50%-13px);
+  width: 26px;
+  height: 26px;
+  color: #fff;
+}
