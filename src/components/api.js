@@ -1,3 +1,7 @@
+import {
+  request
+} from '../components/utils/utils.js';
+
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/wff-cohort-4',
   headers: {
@@ -6,119 +10,49 @@ const config = {
   },
 };
 
-const getUserInfo = () => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers
+const getUserInfo = () => request(`${config.baseUrl}/users/me`, {headers: config.headers});
+
+const updateUserInfo = (name, about) => request(`${config.baseUrl}/users/me`, {
+  method: 'PATCH',
+  headers: config.headers,
+  body: JSON.stringify({
+    name: name,
+    about: about
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-};
+});
 
-const userInfoUpdate = (name, about) => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: name,
-      about: about
-    })
+const updateUserAvatar = (link) => request(`${config.baseUrl}/users/me/avatar`, {
+  method: 'PATCH',
+  headers: config.headers,
+  body: JSON.stringify({
+    avatar: link
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-};
+});
 
-const userAvatarUpdate = (link) => {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar: link
-    })
+const getServerCards = () => request(`${config.baseUrl}/cards`, {headers: config.headers});
+
+const addServerCard = (placeName, link) => request(`${config.baseUrl}/cards`, {
+  method: 'POST',
+  headers: config.headers,
+  body: JSON.stringify({
+    name: placeName,
+    link: link
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-};
+});
 
-const getInitialCards = () => {
-  return fetch(`${config.baseUrl}/cards`, {
-    headers: config.headers
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-};
+const deleteServerCard = (id) => request(`${config.baseUrl}/cards/${id}`, {
+  method: 'DELETE',
+  headers: config.headers,
+});
 
-const addInitialCard = (placeName, link) => {
-  return fetch(`${config.baseUrl}/cards`, {
-    method: 'POST',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: placeName,
-      link: link
-    })
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-};
+const likeServerCard = (id) => request(`${config.baseUrl}/cards/likes/${id}`, {
+  method: 'PUT',
+  headers: config.headers,
+});
 
-const deleteInitialCard = (id) => {
-  return fetch(`${config.baseUrl}/cards/${id}`, {
-    method: 'DELETE',
-    headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-};
+const dislikeServerCard = (id) => request(`${config.baseUrl}/cards/likes/${id}`, {
+  method: 'DELETE',
+  headers: config.headers,
+});
 
-const likeInitialCard = (id) => {
-  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
-    method: 'PUT',
-    headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-};
-
-const dislikeInitialCard = (id) => {
-  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
-    method: 'DELETE',
-    headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-};
-
-
-
-export { getUserInfo, userInfoUpdate, userAvatarUpdate, getInitialCards, addInitialCard, deleteInitialCard, likeInitialCard, dislikeInitialCard };
+export { getUserInfo, updateUserInfo, updateUserAvatar, getServerCards, addServerCard, deleteServerCard, likeServerCard, dislikeServerCard };

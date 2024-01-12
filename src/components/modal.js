@@ -14,11 +14,5 @@ function closeModalKey(event) {
     closeModal(popup);
   }
 }
-function closeModalOverlay(event) {
-  if (!event.target.closest('.popup__content')) {
-    const popup = document.querySelector('.popup_is-opened');
-    closeModal(popup);
-  }
-}
 
-export { openModal, closeModal, closeModalKey, closeModalOverlay };
+export { openModal, closeModal, closeModalKey };

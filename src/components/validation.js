@@ -30,7 +30,7 @@ function hideInputError(config, formElement, inputElement){
 };
 
 function checkInputValidity(config, formElement, inputElement){
-  const regex = /^[a-zA-zёЁа-яА-я\-\s]{1,}$/;
+  const regex = /^[a-zA-ZёЁа-яА-Я\-\s]{1,}$/;
 
   if (!regex.test(inputElement.value) && inputElement.type == "text"){
     showInputError(config, formElement, inputElement, inputElement.dataset.errorMessage);
@@ -49,13 +49,21 @@ function hasInvalidInput(inputList){
   });
 };
 
+function disableButton(config, buttonElement){
+  buttonElement.disabled = true;
+  buttonElement.classList.add(config.inactiveButtonClass);
+}
+
+function enableButton(config, buttonElement){
+  buttonElement.disabled = false;
+  buttonElement.classList.remove(config.inactiveButtonClass);
+}
+
 function toggleButtonState(config, inputList, buttonElement){
   if (hasInvalidInput(inputList)) {
-    buttonElement.disabled = true;
-    buttonElement.classList.add(config.inactiveButtonClass);
+    disableButton(config, buttonElement)
   } else {
-    buttonElement.disabled = false;
-    buttonElement.classList.remove(config.inactiveButtonClass);
+    enableButton(config, buttonElement)
   }
 };
 
@@ -64,6 +72,11 @@ function setEventListeners(config, formElement){
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
 
   toggleButtonState(config, inputList, buttonElement);
+
+  formElement.addEventListener('reset', () => {
+    disableButton(config, buttonElement)
+  });
+
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(config, formElement, inputElement);
@@ -76,8 +89,8 @@ function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
   formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt) {
-      evt.preventDefault();
+    formElement.addEventListener('submit', function (event) {
+      event.preventDefault();
     });
     setEventListeners(config, formElement);
   });
