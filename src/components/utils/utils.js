@@ -17,26 +17,21 @@ function renderLoading(isLoading, button, buttonText='Сохранить', loadi
   }
 }
 
-async function handleSubmit(request, event, loadingText = "Сохранение...") {
+function handleSubmit(request, event, withFormReset = true, loadingText = "Сохранение...") {
    event.preventDefault();
    const submitButton = event.submitter;
    const initialText = submitButton.textContent;
    renderLoading(true, submitButton, initialText, loadingText);
-   let state;
-   await request()
+   request()
      .then(() => {
-       event.target.reset();
-       state = true;
+        withFormReset && event.target.reset();
      })
      .catch((error) => {
-       console.error(`Ошибка: ${error}`);
-       state = false;
+        console.error(`Ошибка: ${error}`);
      })
      .finally(() => {
-       renderLoading(false, submitButton, initialText);
-
+        renderLoading(false, submitButton, initialText);
      });
-    return state;
  }
 
 export { request, handleSubmit };

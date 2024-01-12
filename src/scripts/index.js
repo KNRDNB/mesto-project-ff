@@ -125,21 +125,17 @@ function handleFormEditSubmit(event) {
     return updateUserInfo(nameInput.value, jobInput.value).then((userData) => {
       profileTitle.textContent = userData.name;
       profileDescription.textContent = userData.about;
+      closeModal(popupEdit);
     });
   }
-  handleSubmit(makeRequest, event).then((state) => {
-    if (state) {
-      closeModal(popupEdit);
-    }
-  });
+  handleSubmit(makeRequest, event)
 }
 
 function handleFormNewSubmit(event) {
-  let cardElement;
   function makeRequest() {
     return addServerCard(placeInput.value, linkInput.value).then(
       (placeData) => {
-        cardElement = createCard({
+        const cardElement = createCard({
           name: placeData.name,
           link: placeData.link,
           cardId: placeData._id,
@@ -150,15 +146,12 @@ function handleFormNewSubmit(event) {
           updateLike: updateLike,
           handleImageClick: openImgPopup,
         });
+        addCard(cardElement);
+        closeModal(popupNew);
       }
     );
   }
-  handleSubmit(makeRequest, event).then((state) => {
-    if (state) {
-      addCard(cardElement);
-      closeModal(popupNew);
-    }
-  });
+  handleSubmit(makeRequest, event)
 }
 
 function handleFormDeleteSubmit(event) {
@@ -166,27 +159,21 @@ function handleFormDeleteSubmit(event) {
   popupDelete.id = '';
 
   function makeRequest() {
-    return deleteServerCard(id);
-  }
-  handleSubmit(makeRequest, event).then((state) => {
-    console.log(state);
-    if (state) {
+    return deleteServerCard(id).then(() =>{
       deleteCard(id);
-      closeModal(popupDelete);
-    }
-  });
+      closeModal(popupDelete);}
+    );
+  }
+  handleSubmit(makeRequest, event, false)
 }
 function handleFormAvatarSubmit(event) {
   function makeRequest() {
     return updateUserAvatar(avatarLinkInput.value).then((userData) => {
       profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
+      closeModal(popupAvatar);
     });
   }
-  handleSubmit(makeRequest, event).then((state) => {
-    if (state) {
-      closeModal(popupAvatar);
-    }
-  });
+  handleSubmit(makeRequest, event)
 }
 
 function updateLike(id, cardLikeBtn, cardLikesCounter) {
