@@ -164,7 +164,7 @@ function handleFormDeleteSubmit(event) {
       closeModal(popupDelete);}
     );
   }
-  handleSubmit(makeRequest, event, false)
+  handleSubmit(makeRequest, event, false, "Удаление...")
 }
 function handleFormAvatarSubmit(event) {
   function makeRequest() {
